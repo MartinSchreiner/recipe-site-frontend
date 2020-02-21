@@ -1,0 +1,32 @@
+<div class="form" >
+  <form [formGroup]="signInForm">
+  <div class="form-group">
+  <input type="text" class="form-control" formControlName="email" name="email" placeholder="Email Address">
+  <div *ngIf="signInForm.get('email').invalid && signInForm.get('email').dirty" class="alert alert-danger">
+    <div *ngIf="signInForm.get('email').errors.email">
+      Please enter a valid email.
+    </div>
+    <div *ngIf="signInForm.get('email').errors.required">
+      Email is required.
+    </div>
+  </div>
+  </div>
+  <div class="form-group">
+  <input type="password" class="form-control" formControlName="password" name="password" placeholder="Password">
+  <div *ngIf="signInForm.get('password').invalid && signInForm.get('password').dirty" class="alert alert-danger">
+    <div *ngIf="signInForm.get('password').errors.minlength">
+      Password must be at least 8 characters.
+    </div>
+    <div *ngIf="signInForm.get('password').errors.required">
+      Password is required.
+    </div>
+  </div>
+  </div>
+  <div class="form-group">
+  <input class = "btn btn-block btn-primary" type="submit" (click)="onSubmit()" value="Sign In" [disabled]="signInForm.invalid">
+  </div>
+</form>
+</div>
+<div class="text-danger" *ngIf="errorMessages">
+  {{errorMessages}}
+</div>

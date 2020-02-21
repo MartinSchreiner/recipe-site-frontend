@@ -1,0 +1,194 @@
+<div *ngIf="mode == 'displayAll'">
+<div *ngIf="userRecipes">
+  <div class="row" style="margin-top: 5%;">
+    <div class="col-sm-6 col-lg-4 py-2" *ngFor="let recipe of userRecipes">
+    <div class="card h-100 fadeInLeft" style="margin: 3%;">
+      <div class="card-header">
+        <h4 class="card-title">{{recipe.title}}</h4>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{recipe.description}}</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary col-md-6" (click)="view(recipe)">View</button>
+        <button class="btn btn-danger col-md-6" (click)="delete(recipe)">Delete</button> 
+      </div>
+    </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 py-2">
+      <div class="card h-100 fadeInLeft" style="margin: 3%;">
+        <div class="card-body" style="display: flex; justify-content: center; align-items: center;">
+          <button class="btn btn-success col-md-6"  (click)="addMode()">Add New Recipe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="mode == 'view'">
+  <div class="card fadeInDown" style="margin-left: 30%; margin-top: 5%; width: 40%">
+    <div class="card-header">
+      <a class="nav-link" (click)="displayAll()" >< View All</a>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">{{recipeToView.title}}</h3>
+      <span class="card-text">
+        <span>{{recipeToView.description}}</span>
+        <br/>
+        <br/>
+        <h5>Ingredients</h5>
+        <ul>
+          <li *ngFor="let item of recipeToView.ingredients">
+            {{item.amount}} {{item.ingredient}}
+          </li>
+        </ul>
+        <br/>
+        <h5>Steps</h5>
+        <ol>
+          <li *ngFor="let step of recipeToView.steps">{{step}}</li>
+        </ol>
+        <br/>
+        Tags: <span *ngFor = "let tag of recipeToView.tags; index as index">{{tag}}<span *ngIf="index < recipeToView.tags.length - 1">, </span></span>
+      </span>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary btn-block" (click)="updateMode(recipeToView)">Update This Recipe</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="mode=='add'">
+  <div class="container fadeInDown" style="margin-top: 5%; width: 50%;">
+    <h1 class="text-center">Add Form</h1>
+    <form [formGroup]="addRecipeForm" (ngSubmit)="add()">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input id="title" class="form-control" type="text" name="title" formControlName="title">
+        <div class="text-danger" *ngIf="addRecipeForm.get('title').dirty && addRecipeForm.get('title').invalid">Title is required.</div>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" formControlName="description" id="description" rows="3"></textarea>
+      </div>
+      <h5>Ingredients:</h5>
+      <div formArrayName="ingredients" *ngFor="let item of addRecipeForm.get('ingredients').controls; let i=index;">
+        <div class="form-group form-inline" [formGroupName]="i">
+          <label for="amount">Amount:</label>
+          <input class="form-control" type="text" formControlName="amount">
+          <label for="ingredient">Ingredient:</label>
+          <input class="form-control" type="text" formControlName="ingredient">
+          <button class="btn btn-danger" (click)="deleteIngredient(addRecipeForm, i)">X</button>
+        </div>
+        <div class="text-danger" *ngIf="addRecipeForm.get('ingredients').controls[i].get('amount').dirty && 
+            addRecipeForm.get('ingredients').controls[i].get('amount').invalid">
+          Amount is required.
+        </div>
+        <div class="text-danger" *ngIf="addRecipeForm.get('ingredients').controls[i].get('ingredient').dirty && 
+            addRecipeForm.get('ingredients').controls[i].get('ingredient').invalid">
+          Ingredient type is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-success col-md-6 offset-md-3" (click)="addIngredient(addRecipeForm)">Add Ingredient</button>
+      </div>
+      <h5>Steps</h5>
+      <div formArrayName="steps" *ngFor="let step of addRecipeForm.get('steps').controls; let i=index">
+        <div class="form-group">
+          <label for="step">Step {{i+1}}:</label>
+          <a class="deleteLink" (click)="deleteStep(addRecipeForm, i)">X</a>
+          <textarea class="form-control" name="step" id="step" formControlName="{{i}}"></textarea>
+        </div> 
+        <div class="text-danger" *ngIf="addRecipeForm.get('steps').controls[i].dirty && addRecipeForm.get('steps').controls[i].invalid">
+          Please write or delete this step.
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-success col-md-6 offset-md-3" (click)="addStep(addRecipeForm)">Add Step</button>
+      </div>
+      <h5>Tags</h5>
+      <div formArrayName="tags" *ngFor="let step of addRecipeForm.get('tags').controls; let i=index">
+        <div class="form-group form-inline">
+          <input type="text" class="form-control" name="tag" id="tag" formControlName="{{i}}">
+          <button class="btn btn-danger" (click)="deleteTag(addRecipeForm, i)">X</button>
+        </div>
+        <div class="text-danger" *ngIf="addRecipeForm.get('tags').controls[i].dirty && addRecipeForm.get('tags').controls[i].invalid">
+          Please write or delete this tag.
+        </div> 
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-success col-md-6 offset-md-3" (click)="addTag(addRecipeForm)">Add Tag</button>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      <button type="button" class="btn btn-danger btn-block" (click)="displayAll()">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="mode=='update'">
+  <div class="container fadeInDown" style="margin-top: 5%; width: 50%;">
+    <h1 class="text-center">Update Recipe Form</h1>
+    <form [formGroup]="updateRecipeForm" (ngSubmit)="update()">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input id="title" class="form-control" type="text" name="title" formControlName="title">
+        <div class="text-danger" *ngIf="updateRecipeForm.get('title').dirty && updateRecipeForm.get('title').invalid">Title is required.</div>
+      </div>
+      <div class="form-group">
+        <label for="description"></label>
+        <textarea class="form-control" formControlName="description" id="description" rows="3"></textarea>
+      </div>
+      <h5>Ingredients</h5>
+      <div formArrayName="ingredients" *ngFor="let item of updateRecipeForm.get('ingredients').controls; let i=index;">
+        <div class="form-group form-inline" [formGroupName]="i">
+          <label for="amount">Amount:</label>
+          <input class="form-control" type="text" formControlName="amount">
+          <label for="ingredient">Ingredient:</label>
+          <input class="form-control" type="text" formControlName="ingredient">
+          <button class="btn btn-danger" (click)="deleteIngredient(updateRecipeForm, i)">X</button>
+        </div>
+        <div class="text-danger" *ngIf="updateRecipeForm.get('ingredients').controls[i].get('amount').dirty && 
+            updateRecipeForm.get('ingredients').controls[i].get('amount').invalid">
+          Amount is required.
+        </div>
+        <div class="text-danger" *ngIf="updateRecipeForm.get('ingredients').controls[i].get('ingredient').dirty && 
+            updateRecipeForm.get('ingredients').controls[i].get('ingredient').invalid">
+          Ingredient type is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-success col-md-6 offset-md-3" (click)="addIngredient(updateRecipeForm)">Add Ingredient</button>
+      </div>
+      <h5>Steps</h5>
+      <div formArrayName="steps" *ngFor="let step of updateRecipeForm.get('steps').controls; let i=index">
+        <div class="form-group">
+          <label for="step">Step {{i+1}}:</label>
+          <a class="deleteLink" name="step" id="step" (click)="deleteStep(updateRecipeForm, i)">X</a>
+          <textarea class="form-control" name="step" id="step" formControlName="{{i}}"></textarea>
+          
+        </div> 
+        <div class="text-danger" *ngIf="updateRecipeForm.get('steps').controls[i].dirty && updateRecipeForm.get('steps').controls[i].invalid">
+          Please write or delete this step.
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-success col-md-6 offset-md-3" (click)="addStep(updateRecipeForm)">Add Step</button>
+      </div>
+      <h5>Tags</h5>
+      <div formArrayName="tags" *ngFor="let step of updateRecipeForm.get('tags').controls; let i=index">
+        <div class="form-group form-inline">
+          <input type="text" class="form-control" name="tag" id="tag" formControlName="{{i}}">
+          <button class="btn btn-danger" (click)="deleteTag(updateRecipeForm, i)">X</button>
+        </div>
+        <div class="text-danger" *ngIf="updateRecipeForm.get('tags').controls[i].dirty && updateRecipeForm.get('tags').controls[i].invalid">
+          Please write or delete this tag.
+        </div>  
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-success col-md-6 offset-md-3" (click)="addTag(updateRecipeForm)">Add Tag</button>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      <button type="button" class="btn btn-danger btn-block" (click)="displayAll()">Cancel</button>
+    </form>
+  </div>
+</div>

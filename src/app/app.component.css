@@ -1,0 +1,12 @@
+.hover-bg:hover{
+    background-color: rgb(196, 194, 194);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+}
+
+a{
+    display: block;
+    padding: 0.25rem 1rem;
+    color: #495057;
+}
