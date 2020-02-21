@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  private signInForm: FormGroup;
-  private errorMessages: string;
+  signInForm: FormGroup;
+  errorMessages: string;
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
