@@ -10,3 +10,7 @@ a{
     padding: 0.25rem 1rem;
     color: #495057;
 }
+
+html{
+    background-color: lightgreen;
+}
