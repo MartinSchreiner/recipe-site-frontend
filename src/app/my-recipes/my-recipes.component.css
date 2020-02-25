@@ -64,7 +64,8 @@
     color:white;
     background-color: #dc3545;
     padding: 0.25rem 0.5rem;
-    margin-left: 90%;
+    position: absolute;
+    right: 16px;
     border-radius: 0.25rem;
  }
  .deleteLink:hover{
@@ -72,4 +73,24 @@
    border-color: #bd2130;
     color: white;
     cursor: pointer;
+ }
+
+ .container{
+    color:white;
+    width:100%;
+    margin:auto;
+    margin-top: 8%;
+ }
+
+ @media screen and (max-width:600px){
+    .container{
+       margin-top: 15%;
+    }
+ }
+
+ @media screen and (min-width:1300px) {
+    .container{
+       width:50%;
+       margin-top: 5%;
+    }
  }

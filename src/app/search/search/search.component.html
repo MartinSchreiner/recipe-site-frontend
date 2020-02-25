@@ -1,57 +1,64 @@
-<div *ngIf = "!recipeToView">
-<div class="card" style="margin-left: 30%; margin-top: 5%; width: 40%">
-  <div class="card-body">
-    <form [formGroup] = "searchForm">
-    <div class="form-group">
-      <input id="searchTerm" class="form-control" type="text" formControlName="term">
-      <select id="my-select" class="custom-select" name="" formControlName="searchBy">
+<div *ngIf="!recipeToView && !searchResults">
+  <div class="wrapper">
+    <div class="title">Discover.</div>
+    <form [formGroup]="searchForm">
+      <div class="row">
+        <div class="col-md-6">
+        <input id="searchTerm" class="form-control" type="text" formControlName="term">
+        </div>
+        <div class="col-md-3">
+        <select id="my-select" class="custom-select" name="" formControlName="searchBy">
           <option disabled value="">Search By:</option>
           <option *ngFor="let opt of searchOptions" value="{{opt.toLowerCase()}}">{{opt}}</option>
-      </select>
-      <button type="submit" class="btn btn-primary btn-block" (click)="onSubmit()">Search!</button>
-      
-    </div>
-  </form>
+        </select>
+        </div>
+        <div class="col-md-3">
+        <button type="submit" class="btn btn-primary btn-block" (click)="onSubmit()">Search!</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 
 <div *ngIf="searchResults">
   <div class="card" style="margin-left: 30%; margin-top: 5%; width: 40%">
     <div class="card-body">
-      
-        <span *ngFor="let recipe of searchResults">
-          <a class="nav-link" (click)="view(recipe)">{{recipe.title}}</a>
-        </span>
-      
+
+      <span *ngFor="let recipe of searchResults">
+        <a class="nav-link" (click)="view(recipe)">{{recipe.title}}</a>
+      </span>
+
     </div>
   </div>
 </div>
-</div>
+
 
 <div *ngIf="recipeToView">
   <div class="card" style="margin-left: 30%; margin-top: 5%; width: 40%">
     <div class="card-header">
-      <a class="nav-link" (click)="backToSearch()" >< Back To Search</a>
+      <a class="nav-link" (click)="backToSearch()">
+        < Back To Search</a>
     </div>
     <div class="card-body">
       <h3 class="card-title">{{recipeToView.title}}</h3>
       <span class="card-text">
         <span>{{recipeToView.description}}</span>
-        <br/>
-        <br/>
+        <br />
+        <br />
         <h5>Ingredients</h5>
         <ul>
           <li *ngFor="let item of recipeToView.ingredients">
             {{item.amount}} {{item.ingredient}}
           </li>
         </ul>
-        <br/>
+        <br />
         <h5>Steps</h5>
         <ol>
           <li *ngFor="let step of recipeToView.steps">{{step}}</li>
         </ol>
-        <br/>
-        Tags: <span *ngFor = "let tag of recipeToView.tags; index as index">{{tag}}<span *ngIf="index < recipeToView.tags.length - 1">, </span></span>
+        <br />
+        Tags: <span *ngFor="let tag of recipeToView.tags; index as index">{{tag}}<span
+            *ngIf="index < recipeToView.tags.length - 1">, </span></span>
       </span>
     </div>
   </div>

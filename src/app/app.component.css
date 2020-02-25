@@ -11,6 +11,6 @@ a{
     color: #495057;
 }
 
-html{
-    background-color: lightgreen;
+router-outlet{
+    background: transparent;
 }

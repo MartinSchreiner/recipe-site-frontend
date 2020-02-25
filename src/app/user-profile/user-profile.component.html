@@ -1,11 +1,12 @@
-<div class="card" *ngIf="userDetails">
-  <div class="card-header">
-    <h2>User Details</h2>
-  </div>
+<div class="row" style="margin-top: 5%;">
+<div class="card col-md-6 offset-md-3" *ngIf="userDetails">
   <div class="card-body">
+    <h2 class="text-center">User Details</h2>
+  
     <ul>
       <li>Full Name: {{userDetails.fullName}}</li>
       <li>Email: {{userDetails.email}}</li>
     </ul>
   </div>
+</div>
 </div>
