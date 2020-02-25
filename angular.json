@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "RecipeSite": {
+    "Recipease": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/RecipeSite",
+            "outputPath": "dist/Recipease",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -135,5 +135,5 @@
       }
     }
   },
-  "defaultProject": "RecipeSite"
+  "defaultProject": "Recipease"
 }
