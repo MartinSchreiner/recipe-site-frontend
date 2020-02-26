@@ -17,6 +17,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { SearchComponent } from './search/search/search.component';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
+import { TimesPipePipe } from './shared/times-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MyRecipesComponent } from './my-recipes/my-recipes.component';
     UserProfileComponent,
     SignInComponent,
     SearchComponent,
-    MyRecipesComponent
+    MyRecipesComponent,
+    TimesPipePipe
   ],
   imports: [
     BrowserModule,

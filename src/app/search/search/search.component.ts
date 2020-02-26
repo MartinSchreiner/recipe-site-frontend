@@ -50,6 +50,7 @@ export class SearchComponent implements OnInit {
 
   backToSearch(){
     this.recipeToView = null;
+    this.searchResults = null;
   }
 
 }

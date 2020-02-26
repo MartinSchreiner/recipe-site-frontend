@@ -12,3 +12,21 @@
     color: white;
     padding: 2rem;
 }
+
+.hover-bg{
+    width:90%;
+    margin: auto;
+    display: block;
+    padding: .35rem .5rem;
+    text-align: center;
+    color: darkslategray;
+    border: lightgray 1px solid;
+    border-radius: 6px;
+}
+
+.hover-bg:hover{
+    color:white;
+    background-color: black;
+    border: black 1px solid;
+    cursor: pointer;
+}
