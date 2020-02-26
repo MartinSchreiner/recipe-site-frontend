@@ -13,6 +13,13 @@
     padding: 2rem;
 }
 
+@media screen and (max-width:576px){
+    .title{
+        font-size: 300%;
+        padding: 2rem 0rem;
+    }
+}
+
 .hover-bg{
     width:90%;
     margin: auto;
