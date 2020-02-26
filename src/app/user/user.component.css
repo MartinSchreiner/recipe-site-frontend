@@ -31,8 +31,8 @@
 .active-bg{
     color: white;
     text-decoration: none;
-    border:black solid 1px;
-    background-color: black;
+    border:darkslategray solid 1px;
+    background-color: darkslategray;
 
 }
 a{
@@ -40,6 +40,7 @@ a{
     color: #495057;
     border-radius: 8px;
     border: lightgray solid 1px;
+    background-color: lightgray;
     margin-bottom: 1.5rem;
     text-align: center;
     width: 45%;
