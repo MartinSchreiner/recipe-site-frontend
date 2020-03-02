@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  userAPIurl: 'http://localhost:3001/userAPI',
-  recipeAPIurl: 'http://localhost:3001/recipeAPI'
+  userAPIurl: 'https://recipease-mds.herokuapp.com/userAPI',
+  recipeAPIurl: 'https://recipease-mds.herokuapp.com/recipeAPI'
 };
 
 /*
